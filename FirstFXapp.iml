@@ -24,5 +24,14 @@
       </library>
     </orderEntry>
     <orderEntry type="library" exported="" name="javafx-swt" level="application" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../lib/bootstrapfx-core-0.4.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

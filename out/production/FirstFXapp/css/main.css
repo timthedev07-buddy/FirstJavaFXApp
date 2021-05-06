@@ -1,0 +1,7 @@
+.containers {
+    -fx-background-color: #313131;
+}
+
+.normal-text {
+    -fx-text-fill: rgba(255, 255, 255);
+}

@@ -2,10 +2,12 @@ package sample;
 
 // importing necessary libraries
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -15,6 +17,7 @@ import org.kordamp.bootstrapfx.BootstrapFX;
 public class Sample extends Application {
 
     int i;
+    Label countDisplay;
 
     private static final String BUTTON_CLASS = "btn";
     private static final String BTN_PRIMARY = "btn-primary";
@@ -33,10 +36,33 @@ public class Sample extends Application {
         // creating a button with jfoenix class
         Button clickme = new Button("Click Me");
 
+        // configure the sizes of the button
+        clickme.setMinWidth(100);
+        clickme.setMinHeight(35);
+        clickme.setPrefWidth(120);
+        clickme.setPrefHeight(45);
+        clickme.setMaxWidth(150);
+        clickme.setMaxHeight(60);
+
         // add a class to it by first getting an
         // array like stuff and appending to it
         clickme.getStyleClass().addAll(BUTTON_CLASS, BTN_INFO);
 
+        // add an mouse event listener to the button
+        EventHandler<MouseEvent> clickmeOnclick = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                // increment i
+                i++;
+
+                // update the label
+                countDisplay.setText(String.format("You clicked %d times", i));
+
+            }
+        };
+
+        // binding the event handler to the button
+        clickme.addEventFilter(MouseEvent.MOUSE_CLICKED, clickmeOnclick);
 
         // creating a border pane
         BorderPane container_pane = new BorderPane();
@@ -45,8 +71,9 @@ public class Sample extends Application {
         VBox vbox = new VBox(10);
 
         // set the label to be one of the children of the vbox
-        Label countDisplay = new Label(String.format("You clicked %d times", i));
-        countDisplay.getStyleClass().add("normal-text");
+        countDisplay = new Label(String.format("You clicked %d times", i));
+        // add some class to it
+        countDisplay.getStyleClass().addAll("normal-text", "labels");
         vbox.getChildren().add(countDisplay);
 
         // add the clickme button created as well

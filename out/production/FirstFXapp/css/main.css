@@ -5,3 +5,7 @@
 .normal-text {
     -fx-text-fill: rgba(255, 255, 255);
 }
+
+.labels {
+    -fx-font-size: 20;
+}

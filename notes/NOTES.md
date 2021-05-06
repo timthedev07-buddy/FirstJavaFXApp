@@ -34,8 +34,10 @@ sets the node hbox to be in the bottom right corner of the pane with an offset o
 A `GridPane` places its nodes into a grid of rows and columns. Nodes may span multiple rows or columns. GridPane is the most flexible built-in layout pane. 
 
 
-# FX CSS my cheat-sheet for common style attributes
-To change the font color:
+# FX CSS
+ my little cheat-sheet for common style attributes
+
+### To change the font color:
 ```css
 .text {
     -fx-text-fill: #hex or rgba

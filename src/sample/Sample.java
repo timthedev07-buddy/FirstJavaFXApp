@@ -3,7 +3,9 @@ package sample;
 // importing necessary libraries
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,30 +13,34 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
 
 public class Sample extends Application {
 
-    int i;
+    byte i;
     Label countDisplay;
+    Button clickme;
+    static final int MIN_WINDOW_WIDTH = 270;
+    static final int MIN_WINDOW_HEIGHT = 500;
 
     private static final String BUTTON_CLASS = "btn";
+    private static final String BTN_INFO = "btn-info";
+    private static final String CONTAINER_PANES = "containers";
+
     private static final String BTN_PRIMARY = "btn-primary";
     private static final String BTN_SECONDARY = "btn-secondary";
     private static final String BTN_DANGER = "btn-danger";
     private static final String BTN_SUCCESS = "btn-success";
     private static final String BTN_LIGHT = "btn-light";
-    private static final String BTN_INFO = "btn-info";
-    private static final String CONTAINER_PANES = "containers";
-
-
 
     @Override
     public void start(Stage stage) throws Exception {
 
         // creating a button with jfoenix class
-        Button clickme = new Button("Click Me");
+        clickme = new Button("Click Me");
 
         // configure the sizes of the button
         clickme.setMinWidth(100);
@@ -52,6 +58,14 @@ public class Sample extends Application {
         EventHandler<MouseEvent> clickmeOnclick = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+
+                // if the number of times clicked is greater then 127
+                if (i > 126) {
+                    clickme.setDisable(true);
+                    countDisplay.setText("Dude, stop clicking, is that not enough?");
+                    return;
+                }
+
                 // increment i
                 i++;
 
@@ -70,10 +84,20 @@ public class Sample extends Application {
         // and create a vertical box with padding of 10
         VBox vbox = new VBox(10);
 
-        // set the label to be one of the children of the vbox
+        // create a label
         countDisplay = new Label(String.format("You clicked %d times", i));
+
+        // automatically wrap the text and set text-align to center
+        countDisplay.setWrapText(true);
+        countDisplay.setTextAlignment(TextAlignment.CENTER);
+
+        // let alignment of the label to center
+        countDisplay.setAlignment(Pos.CENTER);
+
         // add some class to it
         countDisplay.getStyleClass().addAll("normal-text", "labels");
+
+        // set the label to be one of the children of the vbox
         vbox.getChildren().add(countDisplay);
 
         // add the clickme button created as well
@@ -83,6 +107,9 @@ public class Sample extends Application {
         container_pane.setCenter(vbox);
         container_pane.getStyleClass().add(CONTAINER_PANES);
         vbox.setAlignment(Pos.CENTER);
+
+        // add some padding to the container pane
+        container_pane.setPadding(new Insets(10));
 
 
         // create a new scene
@@ -95,8 +122,16 @@ public class Sample extends Application {
         mainScene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
 
         // setting the minimum dimensions of the window
-        stage.setMinWidth(300);
-        stage.setMinHeight(500);
+        stage.setMinWidth(MIN_WINDOW_WIDTH);
+        stage.setMinHeight(MIN_WINDOW_HEIGHT);
+
+        // setting max size of window to be the screen size
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        double screenBoundsWidth = screenBounds.getWidth();
+        double screenBoundsHeight = screenBounds.getHeight();
+        stage.setWidth(screenBoundsWidth);
+        stage.setHeight(screenBoundsHeight);
+
 
         // add scene to stage
         stage.setScene(mainScene);
